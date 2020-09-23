@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
                     res.status(400).json({error: err.message});
                 }
                 else {
-                    // this will still cause jquery to display 'Record updated!'
+                    // Need jquery to display 'Success'
                     res.json(result);
                 }
             });
