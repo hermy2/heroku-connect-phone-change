@@ -4,7 +4,7 @@ var pg = require('pg');
 
 var app = express();
 
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 3000);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -38,6 +38,29 @@ app.post('/update', function(req, res) {
                 }
             }
         );
+    });
+});
+
+app.get('/', function(req, res) {
+    pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
+        // watch for any connect issues
+        if (err) console.log(err);
+               
+            conn.query('SELECT Name,Product__c FROM Contract WHERE Product__c != null',
+            [req.body.name.trim(), req.body.product__c.trim()],
+            function(err, result) {
+                done();
+                if (err) {
+                    res.status(400).json({error: err.message});
+                }
+                else {
+                    // this will still cause jquery to display 'Record updated!'
+                    // eventhough it was inserted
+                    res.json(result);
+                }
+            });
+            
+        
     });
 });
 
