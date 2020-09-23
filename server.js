@@ -54,7 +54,7 @@ app.get('/', function(req, res) {
                     res.status(400).json({error: err.message});
                 }
                 else {
-                    // Need jquery to display 'Success'
+                    //Need jquery to display 'Success'
                     res.json(result);
                 }
             });
